@@ -17,23 +17,7 @@
   <h1>Список литературы.</h1>
   <div class="container">
     <?php
-      echo showHeader();
-      if  (isset ($_POST['send']))
-      {
-        $arrFilter = createFilter($_POST['author'], $_POST['name'], $_POST['year']);
-        if  (!empty ($_POST['author']))
-        {
-          $listBook = selectBookAuthor($arrFilter);
-        } else {
-          $listBook = selectBook($arrFilter);
-        }
-      } else {
-        $listBook = selectBookAll();
-      }
-      foreach ($listBook as $row)
-      {
-          echo showBook($row);
-      }
+      show();
     ?>
   </div>
   <form action="/" method="POST" enctype="multipart/form-data">

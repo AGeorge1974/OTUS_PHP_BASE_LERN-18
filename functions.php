@@ -1,75 +1,24 @@
 <?php
+    include_once('itemTable.php');
 
-    function showHeader (){
-        $curStr = '<div class="row align-items-center">';
-        $curStr = $curStr .   '<div class="col-1">';
-        $curStr = $curStr .    '<div class="listBook">';
-        $curStr = $curStr .           '<p> Id </p>';
-        $curStr = $curStr .       '</div>';
-        $curStr = $curStr .   '</div>';
-
-        $curStr = $curStr .   '<div class="col-5">';
-        $curStr = $curStr .    '<div class="listBook">';
-        $curStr = $curStr .          '<p> Наименование </p>';
-        $curStr = $curStr .       '</div>';
-        $curStr = $curStr .   '</div>';
-
-        $curStr = $curStr .   '<div class="col-3">';
-        $curStr = $curStr .     '<div class="listBook">';
-        $curStr = $curStr .          '<p> Авторы </p>';
-        $curStr = $curStr .    '</div>';
-        $curStr = $curStr .   '</div>';
-
-        $curStr = $curStr .    '<div class="col-2">';
-        $curStr = $curStr .       '<div class="listBook">';
-        $curStr = $curStr .           '<p> кол-во стр. </p>';
-        $curStr = $curStr .    '</div>';
-        $curStr = $curStr .   '</div>';
-
-        $curStr = $curStr .   '<div class="col-1">';
-        $curStr = $curStr .    '<div class="listBook">';
-        $curStr = $curStr .           '<p> Год </p>';
-        $curStr = $curStr .    '</div>';
-        $curStr = $curStr .   '</div>';
-        $curStr = $curStr . '</div>';
-
-        return $curStr;
-    }
-
-    function showBook ($showOneBook){
-        $curStr = '<div class="row align-items-center">';
-        $curStr = $curStr .   '<div class="col-1">';
-        $curStr = $curStr .    '<div class="listBook">';
-        $curStr = $curStr .           '<p>' . $showOneBook['idbook'] . '</p>';
-        $curStr = $curStr .       '</div>';
-        $curStr = $curStr .   '</div>';
-
-        $curStr = $curStr .   '<div class="col-5">';
-        $curStr = $curStr .    '<div class="listBook">';
-        $curStr = $curStr .          '<p>' . $showOneBook['name'] . '</p>';
-        $curStr = $curStr .       '</div>';
-        $curStr = $curStr .   '</div>';
-
-        $curStr = $curStr .   '<div class="col-3">';
-        $curStr = $curStr .     '<div class="listBook">';
-        $curStr = $curStr .          '<p>' . selectAuthor($showOneBook['idbook']) . '</p>';
-        $curStr = $curStr .    '</div>';
-        $curStr = $curStr .   '</div>';
-
-        $curStr = $curStr .    '<div class="col-2">';
-        $curStr = $curStr .       '<div class="listBook">';
-        $curStr = $curStr .           '<p>' . $showOneBook['pages'] . '</p>';
-        $curStr = $curStr .    '</div>';
-        $curStr = $curStr .   '</div>';
-
-        $curStr = $curStr .   '<div class="col-1">';
-        $curStr = $curStr .    '<div class="listBook">';
-        $curStr = $curStr .           '<p>' . $showOneBook['year'] . '</p>';
-        $curStr = $curStr .    '</div>';
-        $curStr = $curStr .   '</div>';
-        $curStr = $curStr . '</div>';
-
-        return $curStr;
+    function show (){
+        if  (isset ($_POST['send']))
+        {
+        $arrFilter = createFilter($_POST['author'], $_POST['name'], $_POST['year']);
+        if  (!empty ($_POST['author']))
+        {
+            $listBook = selectBookAuthor($arrFilter);
+        } else {
+            $listBook = selectBook($arrFilter);
+        }
+        } else {
+        $listBook = selectBookAll();
+        }
+        require 'headerTable.html';
+        foreach ($listBook as $row)
+        {
+            showStrTable($row);
+        }
     }
 
     function createFilter (string $author, string $name, $year){
@@ -91,7 +40,3 @@
     }
 
 ?>
-
-
-
-
